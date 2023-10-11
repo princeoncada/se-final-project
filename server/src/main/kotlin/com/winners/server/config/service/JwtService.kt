@@ -5,9 +5,11 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.stereotype.Service
 import java.util.Date
 import javax.crypto.SecretKey
 
+@Service
 class JwtService(
     private val secretKey: SecretKey,
     private val refreshTokenRepository: RefreshTokenRepository

@@ -10,6 +10,8 @@ class JwtConfig {
     @Bean
     fun secretKey(): SecretKey {
         val keyGenerator: KeyGenerator = KeyGenerator.getInstance("HmacSHA256")
-        return keyGenerator.generateKey()
+        val key = keyGenerator.generateKey()
+        println(key)
+        return key
     }
 }
