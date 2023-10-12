@@ -1,56 +1,42 @@
 package com.winners.server.application.rest
 
-import com.nimbusds.oauth2.sdk.TokenResponse
 import com.winners.server.config.service.JwtService
 import com.winners.server.config.service.StockUserDetailsService
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.security.core.Authentication
+import io.jsonwebtoken.Claims
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest
-import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest
-import org.springframework.security.oauth2.client.registration.ClientRegistration
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
-import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationExchange
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationResponse
-import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.RestTemplate
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.view.RedirectView
-import org.springframework.web.util.UriComponentsBuilder
 
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
     private val jwtService: JwtService,
-    private val stockUserDetailsService: StockUserDetailsService,
-    private val clientRegistrationRepository: ClientRegistrationRepository,
-    private val restTemplate: RestTemplate
+    private val stockUserDetailsService: StockUserDetailsService
 ) {
     @GetMapping
-    fun redirect(authentication: Authentication): RedirectView {
-        println(authentication.name)
+    fun provideAccessToken(): RedirectView {
+        val authentication = SecurityContextHolder.getContext().authentication
         val user = stockUserDetailsService.loadUserByUsername(authentication.name)
         val token = jwtService.generateToken(user)
         println(token)
         return RedirectView("http://localhost:5000/retrieve-token?token=$token")
-//        return RedirectView("http://localhost:8080/api/auth/user")
     }
 
     @GetMapping("/user")
-    fun getUser(): Authentication {
-        return SecurityContextHolder.getContext().authentication
+    fun jwtCookie(request: HttpServletRequest): String {
+        val authentication = SecurityContextHolder.getContext().authentication
+        val header: String = request.getHeader("Authorization")
+        val token: String = header.substring(7)
+        val payload: Claims = jwtService.getClaims(token)
+
+        println(payload.subject)
+        println(payload["authorities"])
+        println(authentication.name)
+        println(authentication.authorities)
+
+        return "done"
     }
-//
-//    private val registrationId: String = "google"
-//
-//    data class CodeRequest(
-//        val code: String?
-//    )
-//
-//    @PostMapping("/google/exchange")
-//    fun exchangeAuthorizationCode(@RequestBody codeRequest: CodeRequest) {
-//        println(codeRequest)
-//    }
 }
