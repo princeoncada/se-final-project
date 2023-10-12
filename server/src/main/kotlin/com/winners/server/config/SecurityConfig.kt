@@ -35,11 +35,6 @@ class SecurityConfig(
                 }
                 defaultSuccessUrl("/api/auth", true)
             }
-            addFilterBefore<UsernamePasswordAuthenticationFilter>(
-                JwtAuthenticationFilter(
-                    jwtService
-                )
-            )
         }
         return http.build()
     }
@@ -48,7 +43,7 @@ class SecurityConfig(
     fun corsFilter(): CorsFilter {
         val source = UrlBasedCorsConfigurationSource()
         val config = CorsConfiguration().applyPermitDefaultValues()
-        config.allowedOrigins = listOf("http://localhost:5173")
+        config.allowedOrigins = listOf("http://localhost:5000")
         source.registerCorsConfiguration("/**", config)
         return CorsFilter(source)
     }

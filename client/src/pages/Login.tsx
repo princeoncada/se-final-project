@@ -1,17 +1,16 @@
 import '../styles/Login.css';
+
 function Login() {
-    function handleGoogleLogin() {
-        window.location.href = "http://localhost:8080/oauth2/authorization/google"
-    }
+    const handleGoogleLogin = () => {
+        // Redirect to the Spring Boot backend's Google OAuth login endpoint
+        window.location.href = 'http://localhost:8080/oauth2/authorization/google'; // Replace with your actual backend URL
+    };
 
     return (
-        <main>
-            <h1>Login</h1>
-            <button className="google-button" onClick={handleGoogleLogin}>
-                Login with Google
-            </button>
-        </main>
-    )
+        <div>
+            <button onClick={handleGoogleLogin}>Login with Google</button>
+        </div>
+    );
 }
 
 export default Login;

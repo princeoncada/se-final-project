@@ -1,27 +1,23 @@
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import Home from "./pages/Home.tsx";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from "./pages/Login.tsx";
-import {useState} from "react";
-import LoginSuccess from "./pages/LoginSucces.tsx";
+import React, {useState} from "react";
+import Home from "./pages/Home.tsx";
+import About from "./pages/About.tsx";
+import Contact from "./pages/Contact.tsx";
+import RetrieveToken from "./pages/RetrieveToken.tsx";
+import Cookies from "js-cookie";
+
 
 function Routing() {
-    const [user, setUser] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={
-                    isLoggedIn ? <Home/> : <Navigate to="/login"/>
+                    Cookies.get("JWT") == undefined ? <Login /> : <Home thisToken={Cookies.get("JWT")}/>
                 }/>
-                <Route path="/login" element={<Login />}/>
-                {/*<Route path="/about" element={*/}
-                {/*    user == null ? <Login/> : <About/>*/}
-                {/*}/>*/}
-                {/*<Route path="/contact" element={*/}
-                {/*    user == null ? <Login/> : <Contact/>*/}
-                {/*}/>*/}
-                <Route path="/login-success" element={<LoginSuccess user={user} isLoggedIn={isLoggedIn} userState={setUser} loginState={setIsLoggedIn}/>}/>
+                <Route path="/about" element={<About />}/>
+                <Route path="/contact" element={<Contact />}/>
+                <Route path="/retrieve-token" element={<RetrieveToken />}/>
             </Routes>
         </BrowserRouter>
     )
