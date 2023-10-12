@@ -2,13 +2,10 @@ import Header from "../components/Header.tsx";
 import Footer from "../components/Footer.tsx";
 import Cookies from "js-cookie";
 
-function Home(props) {
-
+function Home() {
     function viewToken() {
-        console.log(props.thisToken)
+        console.log(Cookies.get("JWT"))
     }
-
-    console.log(Cookies.get("JWT"))
 
     return (
         <>
