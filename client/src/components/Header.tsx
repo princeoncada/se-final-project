@@ -16,6 +16,10 @@ function Header() {
                     <Link to="/contact">
                         <div className="nav__link">Contact</div>
                     </Link>
+                    <div>|</div>
+                    <Link to="/logout">
+                        <div className="nav__link">Logout</div>
+                    </Link>
                 </div>
             </nav>
         </header>
