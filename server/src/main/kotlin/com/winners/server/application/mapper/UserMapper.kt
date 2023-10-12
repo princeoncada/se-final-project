@@ -32,7 +32,7 @@ class UserMapper(
     ): User {
         return User(
             id = id,
-            role = roleRepository.findById(entityRequest.role).get(),
+            role = roleRepository.findByName(entityRequest.role).get(),
             email = entityRequest.email,
             password = entityRequest.password,
             firstName = entityRequest.firstName,

@@ -23,14 +23,14 @@ data class User(
     @Column(name = "password", nullable = false)
     val password: String,
 
-    @Column(name = "first_name", nullable = false)
-    val firstName: String,
+    @Column(name = "first_name")
+    val firstName: String? = null,
 
-    @Column(name = "last_name", nullable = false)
-    val lastName: String,
+    @Column(name = "last_name")
+    val lastName: String? = null,
 
     @Column(name = "birth_date")
-    val birthDate: LocalDateTime,
+    val birthDate: LocalDateTime? = null,
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)

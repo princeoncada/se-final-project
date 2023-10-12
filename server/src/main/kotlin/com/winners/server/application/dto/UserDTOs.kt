@@ -6,18 +6,18 @@ class UserDTOs {
         val role: String,
         val email: String,
         val password: String,
-        val firstName: String,
-        val lastName: String,
-        val birthDate: String,
+        val firstName: String?,
+        val lastName: String?,
+        val birthDate: String?,
     )
 
     data class PostRequest(
         val role: String,
         val email: String,
         val password: String,
-        val firstName: String,
-        val lastName: String,
-        val birthDate: String,
+        val firstName: String?,
+        val lastName: String?,
+        val birthDate: String?,
     )
 
     data class PutRequest(
