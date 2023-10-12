@@ -7,9 +7,9 @@ function Login() {
     };
 
     return (
-        <div>
-            <button onClick={handleGoogleLogin}>Login with Google</button>
-        </div>
+        <main>
+            <button className="google-button" onClick={handleGoogleLogin}>Login with Google</button>
+        </main>
     );
 }
 
